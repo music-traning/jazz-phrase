@@ -13,6 +13,7 @@ export const translations = {
     tempoLabel: 'テンポ',
     saveButton: '保存',
     generateButton: 'フレーズ生成',
+    exportMidiButton: 'MIDI出力',
     savedLibrary: '保存済みフレーズ ライブラリ',
     loadButton: 'このフレーズを楽譜にロード',
     langButton: 'English',
@@ -36,6 +37,7 @@ export const translations = {
 3. **「フレーズ生成」を押す** – 毎回異なるフレーズが生成されます。ボイスリーディング（音の滑らかな繋がり）を計算して選球しています。
 4. **再生ボタン▶を押す** – テンポに合わせて自動演奏します。スウィング感も再現！
 5. **「保存」を押す** – 気に入ったフレーズをライブラリに保存できます。
+6. **「MIDI出力」を押す** – 現在のフレーズをMIDIファイルとしてダウンロードできます。
 
 ### 楽譜の見方
 - 上段: 通常の五線譜（音符）
@@ -62,6 +64,7 @@ export const translations = {
     tempoLabel: 'Tempo',
     saveButton: 'SAVE',
     generateButton: 'GENERATE PHRASE',
+    exportMidiButton: 'MIDI EXPORT',
     savedLibrary: 'Saved Phrases Library',
     loadButton: 'Load this phrase to score',
     langButton: '日本語',
@@ -85,6 +88,7 @@ This app automatically generates jazz phrases over a 2-5-1-6 chord progression, 
 3. **Press "Generate Phrase"** – A new phrase is generated each time, selected by calculating voice leading (smooth note connections).
 4. **Press Play ▶** – Auto-plays at the set tempo with swing feel!
 5. **Press "Save"** – Save favorite phrases to your library.
+6. **Press "MIDI EXPORT"** – Download the current phrase as a MIDI file.
 
 ### Reading the Score
 - Top staff: Standard notation

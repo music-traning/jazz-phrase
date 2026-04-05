@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Play, BookmarkPlus, BookOpen, Trash2, Music, HelpCircle } from 'lucide-react';
+import { Play, BookmarkPlus, BookOpen, Trash2, Music, HelpCircle, Download } from 'lucide-react';
 import * as Tone from 'tone';
 
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -13,6 +13,7 @@ import { LICKS_DB, GUITARIST_PREFERENCES, LEGENDARY_GUITARISTS, PhraseNote, Save
 import { SPECIALIST_DB } from '../data/_specialists';
 import { parseProgression } from '../utils/parser';
 import { translations } from '../data/translations';
+import { exportToMidi } from '../utils/midiExport';
 
 const PRESET_PROGRESSIONS = [
   { name: 'II-V-I (C Major)', text: 'Dm7 | G7 | CMaj7 | Am7' },
@@ -502,6 +503,9 @@ export default function JazzPhraseGenerator() {
             <div className="flex items-center gap-4 w-full md:w-auto justify-center md:justify-end flex-wrap">
               <button onClick={togglePlayback} className={`w-12 h-12 rounded-full flex items-center justify-center text-[#170e06] transition-transform shadow-[0_0_15px_rgba(217,119,6,0.4)] ${isPlaying ? 'bg-amber-800 opacity-50' : 'bg-gradient-to-b from-amber-400 to-amber-600 hover:scale-105'}`}>
                 {isPlaying ? <Music size={20} fill="currentColor" className="animate-pulse text-amber-200" /> : <Play size={20} fill="currentColor" className="ml-1" />}
+              </button>
+              <button onClick={() => exportToMidi(currentPhrase, tempo, `Jazz_Phrase_${selectedGuitarist.replace(/\s+/g, '_')}.mid`)} className="flex items-center gap-2 bg-[#2a1b0e] hover:bg-[#3a2717] border border-amber-800/50 text-amber-500 py-3 px-4 rounded transition-colors text-sm font-bold">
+                <Download size={18} /> {t.exportMidiButton}
               </button>
               <button onClick={handleSavePhrase} className="flex items-center gap-2 bg-[#2a1b0e] hover:bg-[#3a2717] border border-amber-800/50 text-amber-500 py-3 px-4 rounded transition-colors text-sm font-bold">
                 <BookmarkPlus size={18} /> {t.saveButton}
