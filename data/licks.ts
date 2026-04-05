@@ -6,6 +6,15 @@ export type Lick = { id: string; notes: PhraseNote[]; level: number; tags: strin
 export type SavedPhrase = { id: number; title: string; notes: PhraseNote[]; description: string; tempo: number };
 export type Lang = 'ja' | 'en';
 
+export type GuitaristProfile = {
+  tags            : string[];       // 既存タグ（後方互換）
+  tempoAffinity   : number;        // 速弾き傾向 0.0〜1.0
+  restDensity     : number;        // 休符多用度 0.0〜1.0
+  octaveRange     : [number, number]; // 好む音域（オクターブ）
+  swingStrength   : number;        // スウィング感 0.0〜1.0
+  chromaticTaste  : number;        // 半音アプローチ傾向 0.0〜1.0
+  approachDir     : 'above'|'below'|'both'; // 目標音への接近方向
+};
 // --- キーごとのオフセット値 ---
 // フレット計算がマイナスになって破綻するのを防ぐため、Bb Majorは10に設定しています。
 export const KEY_OFFSETS: Record<string, number> = {
@@ -29,32 +38,32 @@ export const LEGENDARY_GUITARISTS = [
   "Pat Metheny", "Peter Bernstein", "Tal Farlow", "Toshiki Nunokawa (布川俊樹)", "Wes Montgomery"
 ];
 
-export const GUITARIST_PREFERENCES: Record<string, string[]> = {
-  "Allan Holdsworth": ['altered', 'scalar', 'fast', 'bebop'],
-  "Barney Kessel": ['bluesy', 'bebop', 'standard'],
-  "Bill Frisell": ['standard', 'scalar', 'lydian'],
-  "Charlie Christian": ['arpeggio', 'standard', 'bebop'],
-  "Django Reinhardt": ['arpeggio', 'fast', 'bebop'],
-  "Ed Bickert": ['standard', 'arpeggio', 'bebop'],
-  "George Benson": ['fast', 'bluesy', 'bebop', 'pentatonic'],
-  "Gilad Hekselman": ['lydian', 'scalar', 'bebop'],
-  "Grant Green": ['bluesy', 'pentatonic', 'standard'],
-  "Herb Ellis": ['bebop', 'standard', 'bluesy'],
-  "Jim Hall": ['standard', 'scalar', 'lydian'],
-  "Joe Pass": ['bebop', 'arpeggio', 'fast'],
-  "John McLaughlin": ['fast', 'altered', 'scalar', 'bebop'],
-  "John Scofield": ['bluesy', 'altered', 'bebop', 'scalar'],
-  "Julian Lage": ['scalar', 'arpeggio', 'bebop', 'lydian'],
-  "Kenny Burrell": ['bluesy', 'standard', 'pentatonic'],
-  "Kurt Rosenwinkel": ['lydian', 'altered', 'scalar'],
-  "Lenny Breau": ['arpeggio', 'lydian', 'scalar'],
-  "Mike Stern": ['fast', 'bluesy', 'pentatonic', 'altered'],
-  "Pasquale Grasso": ['fast', 'bebop', 'arpeggio'],
-  "Pat Metheny": ['lydian', 'fast', 'scalar', 'bebop'],
-  "Peter Bernstein": ['bebop', 'standard', 'arpeggio'],
-  "Tal Farlow": ['fast', 'bebop', 'arpeggio'],
-  "Toshiki Nunokawa (布川俊樹)": ['altered', 'bebop', 'lydian', 'scalar'],
-  "Wes Montgomery": ['arpeggio', 'standard', 'bluesy', 'bebop'],
+export const GUITARIST_PREFERENCES: Record<string, GuitaristProfile> = {
+  "Allan Holdsworth": { tags: ['altered', 'scalar', 'fast', 'bebop'], tempoAffinity: 0.95, restDensity: 0.05, octaveRange: [4, 6], swingStrength: 0.50, chromaticTaste: 0.40, approachDir: 'both' },
+  "Barney Kessel": { tags: ['bluesy', 'bebop', 'standard'], tempoAffinity: 0.60, restDensity: 0.15, octaveRange: [3, 5], swingStrength: 0.70, chromaticTaste: 0.50, approachDir: 'below' },
+  "Bill Frisell": { tags: ['standard', 'scalar', 'lydian'], tempoAffinity: 0.40, restDensity: 0.30, octaveRange: [3, 5], swingStrength: 0.50, chromaticTaste: 0.30, approachDir: 'both' },
+  "Charlie Christian": { tags: ['arpeggio', 'standard', 'bebop'], tempoAffinity: 0.65, restDensity: 0.10, octaveRange: [3, 5], swingStrength: 0.75, chromaticTaste: 0.45, approachDir: 'below' },
+  "Django Reinhardt": { tags: ['arpeggio', 'fast', 'bebop'], tempoAffinity: 0.90, restDensity: 0.10, octaveRange: [3, 6], swingStrength: 0.80, chromaticTaste: 0.60, approachDir: 'below' },
+  "Ed Bickert": { tags: ['standard', 'arpeggio', 'bebop'], tempoAffinity: 0.50, restDensity: 0.20, octaveRange: [3, 5], swingStrength: 0.65, chromaticTaste: 0.35, approachDir: 'below' },
+  "George Benson": { tags: ['fast', 'bluesy', 'bebop', 'pentatonic'], tempoAffinity: 0.85, restDensity: 0.10, octaveRange: [3, 6], swingStrength: 0.85, chromaticTaste: 0.55, approachDir: 'below' },
+  "Gilad Hekselman": { tags: ['lydian', 'scalar', 'bebop'], tempoAffinity: 0.70, restDensity: 0.20, octaveRange: [3, 6], swingStrength: 0.60, chromaticTaste: 0.35, approachDir: 'both' },
+  "Grant Green": { tags: ['bluesy', 'pentatonic', 'standard'], tempoAffinity: 0.55, restDensity: 0.20, octaveRange: [3, 5], swingStrength: 0.60, chromaticTaste: 0.55, approachDir: 'below' },
+  "Herb Ellis": { tags: ['bebop', 'standard', 'bluesy'], tempoAffinity: 0.65, restDensity: 0.15, octaveRange: [3, 5], swingStrength: 0.75, chromaticTaste: 0.50, approachDir: 'below' },
+  "Jim Hall": { tags: ['standard', 'scalar', 'lydian'], tempoAffinity: 0.45, restDensity: 0.35, octaveRange: [3, 5], swingStrength: 0.55, chromaticTaste: 0.30, approachDir: 'above' },
+  "Joe Pass": { tags: ['bebop', 'arpeggio', 'fast'], tempoAffinity: 0.85, restDensity: 0.10, octaveRange: [3, 6], swingStrength: 0.80, chromaticTaste: 0.50, approachDir: 'below' },
+  "John McLaughlin": { tags: ['fast', 'altered', 'scalar', 'bebop'], tempoAffinity: 0.98, restDensity: 0.05, octaveRange: [3, 7], swingStrength: 0.60, chromaticTaste: 0.55, approachDir: 'both' },
+  "John Scofield": { tags: ['bluesy', 'altered', 'bebop', 'scalar'], tempoAffinity: 0.65, restDensity: 0.25, octaveRange: [3, 6], swingStrength: 0.70, chromaticTaste: 0.60, approachDir: 'below' },
+  "Julian Lage": { tags: ['scalar', 'arpeggio', 'bebop', 'lydian'], tempoAffinity: 0.75, restDensity: 0.25, octaveRange: [3, 6], swingStrength: 0.65, chromaticTaste: 0.40, approachDir: 'both' },
+  "Kenny Burrell": { tags: ['bluesy', 'standard', 'pentatonic'], tempoAffinity: 0.50, restDensity: 0.20, octaveRange: [3, 5], swingStrength: 0.70, chromaticTaste: 0.55, approachDir: 'below' },
+  "Kurt Rosenwinkel": { tags: ['lydian', 'altered', 'scalar'], tempoAffinity: 0.70, restDensity: 0.25, octaveRange: [3, 6], swingStrength: 0.55, chromaticTaste: 0.30, approachDir: 'both' },
+  "Lenny Breau": { tags: ['arpeggio', 'lydian', 'scalar'], tempoAffinity: 0.60, restDensity: 0.30, octaveRange: [3, 6], swingStrength: 0.50, chromaticTaste: 0.25, approachDir: 'above' },
+  "Mike Stern": { tags: ['fast', 'bluesy', 'pentatonic', 'altered'], tempoAffinity: 0.85, restDensity: 0.10, octaveRange: [3, 6], swingStrength: 0.80, chromaticTaste: 0.60, approachDir: 'below' },
+  "Pasquale Grasso": { tags: ['fast', 'bebop', 'arpeggio'], tempoAffinity: 0.95, restDensity: 0.05, octaveRange: [3, 7], swingStrength: 0.85, chromaticTaste: 0.55, approachDir: 'below' },
+  "Pat Metheny": { tags: ['lydian', 'fast', 'scalar', 'bebop'], tempoAffinity: 0.80, restDensity: 0.15, octaveRange: [3, 6], swingStrength: 0.65, chromaticTaste: 0.35, approachDir: 'above' },
+  "Peter Bernstein": { tags: ['bebop', 'standard', 'arpeggio'], tempoAffinity: 0.60, restDensity: 0.20, octaveRange: [3, 5], swingStrength: 0.75, chromaticTaste: 0.50, approachDir: 'below' },
+  "Tal Farlow": { tags: ['fast', 'bebop', 'arpeggio'], tempoAffinity: 0.90, restDensity: 0.10, octaveRange: [3, 6], swingStrength: 0.80, chromaticTaste: 0.50, approachDir: 'below' },
+  "Toshiki Nunokawa (布川俊樹)": { tags: ['altered', 'bebop', 'lydian', 'scalar'], tempoAffinity: 0.75, restDensity: 0.15, octaveRange: [3, 6], swingStrength: 0.70, chromaticTaste: 0.45, approachDir: 'both' },
+  "Wes Montgomery": { tags: ['arpeggio', 'standard', 'bluesy', 'bebop'], tempoAffinity: 0.70, restDensity: 0.15, octaveRange: [3, 6], swingStrength: 0.80, chromaticTaste: 0.55, approachDir: 'below' },
 };
 
 // --- フレーズデータベース ---
@@ -254,5 +263,17 @@ export const LICKS_DB: Record<string, Lick[]> = {
     { id: 'am_l3_9', level: 3, tags: ['fast', 'scalar'], notes: [n('c/5', '16', 3, 5, 'm3rd'), n('b/4', '16', 3, 4, '9th'), n('a/4', '16', 3, 2, 'Root'), n('g/4', '16', 4, 5, 'm7th'), n('e/4', '8', 4, 2, '5th'), n('d/4', '8', 5, 5, '11th')] },
     { id: 'am_l3_10', level: 3, tags: ['fast', 'bebop'], notes: [n('a/3', '16', 6, 5, 'Root'), n('b/3', '16', 5, 2, '9th'), n('c/4', '16', 5, 3, 'm3rd'), n('db/4', '16', 5, 4, 'Passing'), n('d/4', '8', 5, 5, '11th'), n('e/4', '8', 4, 2, '5th')] },
     { id: 'am_l3_rest1', level: 3, tags: ['fast', 'bebop'], notes: [n('g/4', '16', 4, 5, 'm7th'), n('e/4', '16', 4, 2, '5th'), r('16'), n('c/4', '16', 5, 3, 'm3rd'), n('b/3', '8', 5, 2, '9th'), r('8')] },
-　　]
+  ],
+  Bm7b5: [
+    { id: 'bm7b5_l1_1', level: 1, tags: ['standard'], notes: [n('b/3', '4', 5, 2, 'Root'), n('d/4', '4', 5, 5, 'm3rd')] },
+    { id: 'bm7b5_l1_2', level: 1, tags: ['standard'], notes: [n('f/4', '4', 4, 3, 'b5th'), n('a/4', '4', 3, 2, 'm7th')] },
+    { id: 'bm7b5_l2_1', level: 2, tags: ['arpeggio', 'bebop'], notes: [n('b/3', '8', 5, 2, 'Root'), n('d/4', '8', 5, 5, 'm3rd'), n('f/4', '8', 4, 3, 'b5th'), n('a/4', '8', 3, 2, 'm7th')] },
+    { id: 'bm7b5_l3_1', level: 3, tags: ['fast', 'arpeggio'], notes: [n('b/3', '16', 5, 2, 'Root'), n('d/4', '16', 5, 5, 'm3rd'), n('f/4', '16', 4, 3, 'b5th'), n('a/4', '16', 3, 2, 'm7th'), n('c/5', '8', 3, 5, 'b9th'), n('a/4', '8', 3, 2, 'm7th')] },
+  ],
+  E7b9: [
+    { id: 'e7b9_l1_1', level: 1, tags: ['standard'], notes: [n('e/4', '4', 4, 2, 'Root'), n('ab/4', '4', 4, 6, '3rd')] },
+    { id: 'e7b9_l1_2', level: 1, tags: ['altered'], notes: [n('f/4', '4', 4, 3, 'b9th'), n('d/4', '4', 5, 5, 'm7th')] },
+    { id: 'e7b9_l2_1', level: 2, tags: ['altered', 'bebop'], notes: [n('f/4', '8', 4, 3, 'b9th'), n('e/4', '8', 4, 2, 'Root'), n('d/4', '8', 5, 5, 'm7th'), n('c/4', '8', 5, 3, '#5th')] },
+    { id: 'e7b9_l3_1', level: 3, tags: ['fast', 'altered'], notes: [n('ab/4', '16', 4, 6, '3rd'), n('f/4', '16', 4, 3, 'b9th'), n('d/4', '16', 5, 5, 'm7th'), n('b/3', '16', 5, 2, '5th'), n('bb/3', '8', 5, 1, 'b5th'), n('ab/3', '8', 6, 4, '3rd')] },
+  ],
 };
